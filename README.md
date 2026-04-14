@@ -7,6 +7,7 @@ Official SDK for integrating with the Beehive Hub API. Accept payments simply an
 
 ## Table of Contents
 
+- [Requirements](#requirements)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Authentication](#authentication)
@@ -22,15 +23,25 @@ Official SDK for integrating with the Beehive Hub API. Accept payments simply an
 - [Error Handling](#error-handling)
 - [Values in Cents](#values-in-cents)
 - [Security Best Practices](#security-best-practices)
-- [Testing](#testing)
+- [Type Safety](#type-safety)
+- [Development](#development)
 - [Support](#support)
 - [License](#license)
+
+## Requirements
+
+- Python >= 3.10
 
 ## Installation
 
 ```bash
 pip install beehivehub-python-sdk
 ```
+
+**Dependencies** (installed automatically):
+
+- [httpx](https://www.python-httpx.org/) - HTTP client
+- [pydantic](https://docs.pydantic.dev/) - Data validation and models
 
 ## Quick Start
 
@@ -468,19 +479,59 @@ load_dotenv()
 beehive = create_beehivehub_client(os.environ["BEEHIVE_SECRET_KEY"])
 ```
 
-## Additional Documentation
+## Type Safety
 
-- [Official API Documentation](https://docs.beehivehub.io/)
-- [Node.js SDK](https://github.com/paybeehive/beehivehub-nodejs-sdk)
+The SDK exports 40+ Pydantic models and ships with a `py.typed` marker, providing full support for type checkers like **mypy** and **pyright**.
 
-## Testing
+```python
+from beehivehub import CreateTransactionData, Document, Item
 
-```bash
-pytest
+data: CreateTransactionData = {
+    "amount": 10000,
+    "paymentMethod": "pix",
+    "customer": {
+        "name": "João Silva",
+        "email": "joao@example.com",
+        "document": {"type": "cpf", "number": "00000000191"},
+        "phone": "11999999999",
+    },
+    "items": [
+        {"title": "Produto Teste", "unitPrice": 10000, "quantity": 1, "tangible": True}
+    ],
+}
 ```
 
+## Development
+
+### Setup
+
 ```bash
-pytest --cov
+git clone https://github.com/paybeehive/beehivehub-python-sdk.git
+cd beehivehub-python-sdk
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install -e ".[dev]"
+```
+
+### Available commands
+
+The project uses [taskipy](https://github.com/taskipy/taskipy) as task runner:
+
+```bash
+task test              # Run unit tests
+task test-integration  # Run integration tests (requires .env with API key)
+task lint              # Run linter (ruff)
+task format            # Format code (ruff)
+task typecheck         # Run type checker (mypy)
+task coverage-html     # Generate HTML coverage report
+```
+
+### Versioning
+
+```bash
+task bump-patch        # 1.0.0 → 1.0.1
+task bump-minor        # 1.0.0 → 1.1.0
+task bump-major        # 1.0.0 → 2.0.0
 ```
 
 ## Support
