@@ -1,0 +1,117 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "beehivehub-python-sdk"
+version = "1.0.0"
+description = "Python SDK for the BeeHive Hub payment API"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    { name = "Beehive" },
+]
+keywords = [
+    "sdk",
+    "python",
+    "beehive",
+    "beehivehub",
+    "beehive-hub",
+    "api-client",
+    "payment",
+    "payments",
+    "pix",
+    "boleto",
+    "credit-card",
+    "brazil",
+]
+dependencies = [
+    "httpx>=0.27.0",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=6.0.0",
+    "respx>=0.22.0",
+    "pytest-mock>=3.14.0",
+    "ruff>=0.8.0",
+    "mypy>=1.13.0",
+    "taskipy>=1.12.0",
+    "bump-my-version>=0.28.0",
+    "pytest-dotenv>=0.5.2",
+]
+
+[project.urls]
+Repository = "https://github.com/paybeehive/beehivehub-python-sdk"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["beehivehub", "beehivehub.*"]
+
+[tool.setuptools.package-data]
+beehivehub = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=beehivehub --cov-report=term-missing"
+env_files = [".env"]
+markers = [
+    "integration: testes contra API real (requer API key)",
+]
+
+[tool.coverage.run]
+source = ["beehivehub"]
+omit = [
+    "tests/*",
+    "tests/integration/*",
+]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
+
+[tool.taskipy.tasks]
+test = "pytest tests/ --ignore=tests/integration/ -v"
+test-integration = "pytest tests/integration/ -v"
+lint = "ruff check src/ tests/"
+format = "ruff format src/ tests/"
+typecheck = "mypy src/"
+coverage-html = "pytest tests/ --ignore=tests/integration/ --cov=beehivehub --cov-report=html"
+bump-patch = "bump-my-version bump patch"
+bump-minor = "bump-my-version bump minor"
+bump-major = "bump-my-version bump major"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+
+[tool.bumpversion]
+current_version = "1.0.0"
+commit = true
+tag = true
+tag_name = "v{new_version}"
+commit_message = "chore: bump version {current_version} → {new_version}"
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
