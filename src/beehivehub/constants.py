@@ -7,7 +7,7 @@ BASE_URL_SANDBOX = "https://api.sandbox.hopysplit.com.br/v1"
 PAYMENT_LINK_URL_PRODUCTION = "https://link.conta.paybeehive.com.br"
 PAYMENT_LINK_URL_SANDBOX = "https://link.sandbox.hopysplit.com.br"
 
-BEEHIVE_DOCS = "https://docs.beehivehub.io/"
+BEEHIVE_DOCS = "https://docs.beehivehub.io"
 
 try:
     SDK_VERSION = version("beehivehub-python-sdk")

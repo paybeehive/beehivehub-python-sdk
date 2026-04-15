@@ -466,6 +466,7 @@ cents = round(reais * 100)  # 10000
 5. **Implement webhooks** - Receive status change notifications
 
 ```python
+# Requires: pip install python-dotenv
 # .env
 BEEHIVE_SECRET_KEY=your_secret_key_here
 
@@ -543,4 +544,4 @@ For suggestions, bug reports, or questions:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/paybeehive/beehivehub-python-sdk/blob/main/LICENSE) file for details.

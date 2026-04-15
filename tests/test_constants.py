@@ -27,7 +27,7 @@ class TestURLConstants:
         assert PAYMENT_LINK_URL_SANDBOX == "https://link.sandbox.hopysplit.com.br"
 
     def test_beehive_docs(self):
-        assert BEEHIVE_DOCS == "https://docs.beehivehub.io/"
+        assert BEEHIVE_DOCS == "https://docs.beehivehub.io"
 
     def test_sdk_version(self):
         assert SDK_VERSION == "1.0.0"
