@@ -1,0 +1,30 @@
+# Ambiente Virtual
+.venv/
+
+# Variáveis de Ambiente & Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Build & Distribuição
+dist/
+build/
+*.egg-info/
+
+# Testes & Cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Linting & Type Checking
+.ruff_cache/
+.mypy_cache/
+
+# IDE
+.vscode/
+.claude/
